@@ -35,15 +35,23 @@ def searchMedia(path, title, editedWord):
 
     possible_titles = [
         title,
+        title + ".jpg",
+        title + ".JPG",
         str(file_name + "-" + editedWord + "." + ext),
         str(file_name + "(1)." + ext),
     ]
 
     for title in possible_titles:
-        filepath = os.path.join(path, title)
+        imgpath = os.path.join(path, title)
 
-        if os.path.exists(filepath):
-            return filepath
+        if os.path.exists(imgpath):
+            vidpath = os.path.join(path, file_name + ".MP4")
+            if os.path.exists(vidpath):
+                return imgpath, vidpath
+            else:
+                return imgpath, None
+
+    return None, None
 
 # Supress incompatible characters
 def fixTitle(title):
@@ -99,7 +107,7 @@ def set_geo_exif(exif_dict, lat, lng, altitude):
     exiv_lat = (change_to_rational(lat_deg[0]), change_to_rational(lat_deg[1]), change_to_rational(lat_deg[2]))
     exiv_lng = (change_to_rational(lng_deg[0]), change_to_rational(lng_deg[1]), change_to_rational(lng_deg[2]))
 
-    altitudeRef = 1 if altitude > 0 else 0 
+    altitudeRef = 1 if altitude > 0 else 0
 
     gps_ifd = {
         piexif.GPSIFD.GPSVersionID: (2, 0, 0, 0),
