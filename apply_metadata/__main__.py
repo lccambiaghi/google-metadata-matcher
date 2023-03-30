@@ -1,5 +1,5 @@
 import os
-from process_folder import processFolder
+from apply_metadata_pipeline import processFolder
 import argparse
 
 # def dimension(s):
@@ -24,4 +24,7 @@ import argparse
 #   exit()
 
 # processFolder(args.source_folder, args.edited_word, args.optimize, args.output_folder, args.max_dimension)
-processFolder("takeout_photos", "edited", 100, "output", None)
+
+
+if __name__ == '__main__':
+    processFolder("takeout_photos", "edited", 100, "output", None)
